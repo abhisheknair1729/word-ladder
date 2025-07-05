@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Word Ladder</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Word Ladder</h1>
+    <br>
+    <p class="subtitle" ><span style="text-align:center"> How to Play</span><br> <span style="text-align:justify"> Convert the source (top) word to the target (bottom) word by changing exactly one letter 
+                                         at a time. Each intermediate word should be a valid English word. </span></p>
+    <br>
+  </header>
+
+  <main>
+    <section id="game-section">
+      <div id = "sourceword"></div>
+      <div id = "ladderword"></div>
+      <div id = "targetword"></div>
+
+      <input type="text" id="wordInput" placeholder="Enter a 4-letter word" maxlength="4" />
+      <button onclick="submitWord()">Submit</button>
+      <p id="message"></p>
+    </section>
+    <section id="game-navigation">
+      <button onclick="resetLadder()">Reset</button>
+      <button onclick="initializeGame()">New Game</button>
+      <button onclick="displaySolution()">Show Solution</button>
+    </section>
+  </main>
+
+
+
+  <script type="module" src="script.js"></script>
+  <script type="module" src="wordPairs.js"></script>
+  <script>
+    window.onload = function () {
+      initializeGame();
+    };
+  </script>
+</body>
+</html>
