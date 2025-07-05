@@ -123,7 +123,6 @@ function submitWord() {
 function resetLadder() {
   ladder = [source];
   showEmptyLadder();
-  document.getElementById("wordInput").value = "";
   document.getElementById("message").textContent = "";
 }
 
@@ -137,6 +136,7 @@ function updateLadder() {
       list.innerHTML += htmlContent
     }
   });
+  list.innerHTML += createWordDisplayHTML("    "); //create space for the next word
 }
 
 function displaySolution() {
@@ -148,6 +148,16 @@ function displaySolution() {
     message.textContent = "No solution available.";
   }
 }
+
+var wordSubmited = document.getElementById("wordInput");
+wordSubmited.addEventListener("keyup", function(event) {
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    submitWord();
+  }
+
+});
 
 window.initializeGame = initializeGame;
 window.submitWord = submitWord;
