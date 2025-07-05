@@ -46,6 +46,19 @@ function createWordDisplayHTML(word) {
   return htmlContent;
 }
 
+function createSpecialWordDisplayHTML(word) {
+
+  let htmlContent = "";
+  for (let i = 0; i < word.length; i++) {
+    const letter = word[i].toUpperCase();
+    htmlContent += `<p class=bordered-text-spl>${letter}</p>`;
+    htmlContent += `<div class=horizontalgap></div>`;
+  }
+  htmlContent += "<br>";
+  // htmlContent += "</tr></table>";
+  return htmlContent;
+}
+
 /* Generate HTML for displaying the solution */
 function createSolutionHTML(solution) {
   if (!solution) return "No solution available.";
@@ -83,8 +96,8 @@ function initializeGame() {
     difficulty = 1;
   }
 
-  document.getElementById("sourceword").innerHTML = createWordDisplayHTML(source);
-  document.getElementById("targetword").innerHTML = createWordDisplayHTML(target);
+  document.getElementById("sourceword").innerHTML = createSpecialWordDisplayHTML(source);
+  document.getElementById("targetword").innerHTML = createSpecialWordDisplayHTML(target);
 
   ladder = [source];
   showEmptyLadder();
@@ -109,10 +122,12 @@ function submitWord() {
     return;
   }
 
-  ladder.push(word);
-  updateLadder();
+  var isDone = word == target;
 
-  if (word === target) {
+  ladder.push(word);
+  updateLadder(isDone);
+
+  if (isDone) {
     message.textContent = "🎉 You win! You've reached the target word!";
     input.disabled = true;
   }
@@ -127,16 +142,18 @@ function resetLadder() {
 }
 
 /** Update the displayed ladder list */
-function updateLadder() {
+function updateLadder(isDone) {
   const list = document.getElementById("ladderword");
   list.innerHTML = "";
-  ladder.forEach(word => {
-    if (word != source && word != target) {
-      const htmlContent = createWordDisplayHTML(word);
-      list.innerHTML += htmlContent
-    }
-  });
-  list.innerHTML += createWordDisplayHTML("    "); //create space for the next word
+  for( let i = 1; i < ladder.length; i++) {
+    const word = ladder[i];
+    list.innerHTML += createWordDisplayHTML(word);
+  }
+
+  if(!isDone) {
+    list.innerHTML += createWordDisplayHTML("    "); //create space for the next word
+  }
+
 }
 
 function displaySolution() {
