@@ -90,6 +90,8 @@ function initializeGame() {
     solution = pair.solution;
     difficulty = pair.difficultyscore;
   } else {
+    //should never happen
+    console.error("No word pairs available.");
     source = "cold";
     target = "warm";
     solution = "cold->cord->card->ward->warm";
@@ -99,9 +101,7 @@ function initializeGame() {
   document.getElementById("sourceword").innerHTML = createSpecialWordDisplayHTML(source);
   document.getElementById("targetword").innerHTML = createSpecialWordDisplayHTML(target);
 
-  ladder = [source];
-  showEmptyLadder();
-  document.getElementById("message").textContent = "";
+  resetGame();
 }
 
 /** Submit a guess */
@@ -135,10 +135,17 @@ function submitWord() {
   input.value = "";
 }
 
+function resetGame() {
+  const input = document.getElementById("wordInput");
+  input.disabled = false;
+  input.value = "";
+  document.getElementById("message").textContent = "";
+  resetLadder();
+}
+
 function resetLadder() {
   ladder = [source];
   showEmptyLadder();
-  document.getElementById("message").textContent = "";
 }
 
 /** Update the displayed ladder list */
@@ -179,5 +186,6 @@ wordSubmited.addEventListener("keyup", function(event) {
 window.initializeGame = initializeGame;
 window.submitWord = submitWord;
 window.resetLadder = resetLadder;
+window.resetGame = resetGame;
 window.displaySolution = displaySolution;
 
