@@ -7,6 +7,15 @@ let target = "";
 let solution = "";
 let difficulty = 0;
 let ladder = [];
+const pairs_range = 30000;
+let difficulty_offset = 0;
+
+function setDifficulty() {
+  const difficultySelect = document.getElementById("difficulty");
+  difficulty = parseInt(difficultySelect.value);
+  difficulty_offset = difficulty ? pairs_range : 0 ; // Adjust offset based on difficulty
+  initializeGame();
+}
 
 /** Utility: Random 4-letter word from valid list */
 /** The pairs are sorted by difficulty. Therefore, we have a 
@@ -15,9 +24,8 @@ let ladder = [];
 function pickRandomPair() {
   if (wordPairs.length === 0) return null;
 
-  const difficulty_threshold = 10000
-  // assert(wordPairs.length > difficulty_threshold, "wordPairs length exceeds maximum limit");
-  const idx = Math.floor(Math.random() * difficulty_threshold);
+  // assert(wordPairs.length > pairs_range, "wordPairs length exceeds maximum limit");
+  const idx = Math.floor(Math.random() * pairs_range + difficulty_offset);
   
   return wordPairs[idx];
 }
@@ -188,4 +196,5 @@ window.submitWord = submitWord;
 window.resetLadder = resetLadder;
 window.resetGame = resetGame;
 window.displaySolution = displaySolution;
+window.setDifficulty = setDifficulty;
 
